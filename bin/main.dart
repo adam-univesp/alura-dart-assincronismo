@@ -1,7 +1,8 @@
 import 'package:http/http.dart';
+import 'package:alura_dart_assincronismo/exercicios.dart';
 
 void main() {
-requestData();
+  receitas();
 }
 
 Future<void> requestData() async {
