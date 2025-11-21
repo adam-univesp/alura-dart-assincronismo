@@ -26,7 +26,7 @@ Future<void> requestData() async {
   print("1.2");
 }
 
-readDataAsync() async {
+  readDataAsync() async {
   String url =
       "https://gist.githubusercontent.com/adam-univesp/826ff7f981fe321bf5b03763c1516508/raw/bf34368e8a293ce9e52b17c9ec45056d4529a99a/accounts.json";
   Uri uri = Uri.parse(url);
