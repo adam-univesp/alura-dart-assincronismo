@@ -1,3 +1,6 @@
+entrypoint = "main.dart"
+modules = ["dart-3.8"]
+
 [agent]
 expertMode = true
 
