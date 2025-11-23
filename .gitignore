@@ -25,3 +25,4 @@ doc/api/
 # Optional: exclude web build files if you only commit source
 # web/
 z
+lib/key.dart
