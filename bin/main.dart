@@ -1,11 +1,16 @@
-import 'dart:io';
-
+import 'dart:async';
+import 'dart:convert';
 import 'package:alura_dart_assincronismo/key.dart';
 import 'package:http/http.dart';
-import 'dart:convert';
 
-void main() async {
-sendDataAsync({"a": 1, "c": 7});
+StreamController<String> streamController = StreamController<String>();
+
+void main() {
+  StreamSubscription subscricao = streamController.stream.listen(
+    (event) => print(event),
+  );
+  requestData();
+  readDataAsync();
 }
 
 Future<void> requestData() async {
@@ -14,14 +19,10 @@ Future<void> requestData() async {
   Uri uri = Uri.parse(url);
   Future<Response> futureResponse = get(uri);
   futureResponse.then((response) {
-    // print(response.body);
-    List<dynamic> listAccount = json.decode(response.body);
-    Map<String, dynamic> mapCarla = listAccount.firstWhere(
-      (element) => element["name"] == "Carla",
+    streamController.add(
+      "${DateTime.now()} | Requisicao de leitura usando then.",
     );
-    print(mapCarla);
   });
-  print("1.2");
 }
 
 Future<List<dynamic>> readDataAsync() async {
@@ -30,12 +31,14 @@ Future<List<dynamic>> readDataAsync() async {
   Uri uri = Uri.parse(url);
   Response resposta = await get(uri);
   List<dynamic> listAccount = json.decode(resposta.body);
+  streamController.add(
+    "${DateTime.now()} | Requisicao de leitura usando Future",
+  );
   return listAccount;
 }
 
 sendDataAsync(Map<String, dynamic> account) async {
   List<dynamic> listAccount = await readDataAsync();
-  print(listAccount.toString());
   listAccount.add(account);
   String url = "https://api.github.com/gists/826ff7f981fe321bf5b03763c1516508";
   Uri uri = Uri.parse(url);
@@ -51,6 +54,4 @@ sendDataAsync(Map<String, dynamic> account) async {
     headers: headder,
     body: json.encode(body),
   );
-  print(json.encode(body));
-  print(resposta.statusCode);
 }
