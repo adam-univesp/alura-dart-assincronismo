@@ -6,9 +6,9 @@ import 'package:http/http.dart';
 StreamController<String> streamController = StreamController<String>();
 
 void main() {
-  StreamSubscription subscricao = streamController.stream.listen(
-    (event) => print(event),
-  );
+StreamSubscription subscricao = streamController.stream.listen(
+  (event) => print(event),
+);
   requestData();
   readDataAsync();
 }
