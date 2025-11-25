@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:alura_dart_assincronismo/models/account.dart';
 import 'package:alura_dart_assincronismo/services/account_service.dart';
+import 'package:uuid/uuid.dart';
 
 class AccountScreen {
   final AccountService _accountService = AccountService();
@@ -39,6 +40,11 @@ class AccountScreen {
             }
           case "3":
             {
+              await _addAccount();
+              break;
+            }
+          case "4":
+            {
               isRunning = false;
               print("Te vejo na próxima. 👋");
               break;
@@ -66,5 +72,27 @@ class AccountScreen {
     );
 
     await _accountService.addAccount(example);
+  }
+
+  Future<void> _addAccount() async {
+    Uuid uuid = Uuid();
+    String id = uuid.v1();
+    print("Nome:");
+    String? nome = stdin.readLineSync();
+    print("Sobrenome:");
+    String? sobrenome = stdin.readLineSync();
+    print("Saldo:");
+    String? saldo = stdin.readLineSync();
+
+    if (nome != null && sobrenome != null && saldo != null) {
+      await _accountService.addAccount(
+        Account(
+          id: id,
+          name: nome,
+          lastName: sobrenome,
+          balance: double.parse(saldo),
+        ),
+      );
+    }
   }
 }
